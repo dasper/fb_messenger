@@ -35,12 +35,17 @@ class Config
 	 * @param null $default
 	 * @return mixed|null
 	 */
-	private function get($key, $default = null)
+	public function get($key, $default = null)
 	{
 		if ( ! empty($this->config[$key]))
 			return $this->config[$key];
 
 		return $default;
+	}
+
+	public function toArray()
+	{
+		return $this->config;
 	}
 
 	/**
@@ -50,7 +55,7 @@ class Config
 	 * @param null $value
 	 * @return $this
 	 */
-	private function set($key, $value = null)
+	public function set($key, $value = null)
 	{
 		if (is_array($key) && null === $value)
 		{
@@ -74,7 +79,7 @@ class Config
 	 *
 	 * @return $this|void
 	 */
-	private function loadFromFile($path)
+	public function loadFromFile($path)
 	{
 		if ( ! is_file($path))
 			return;
@@ -83,6 +88,18 @@ class Config
 
 		if (is_array($config))
 			$this->config = $config;
+	}
+
+	public static function fromFile($configFilePath)
+	{
+		$configArray = file_get_contents($configFilePath);
+        if (!is_array($configArray)) {
+            throw new \Exception(sprintf(
+                'File \'%s\' must be valid JSON',
+                $configFilePath
+            ));
+        }
+		return new static($configFilePath);
 	}
 
 	public function __call($name, $args = array())

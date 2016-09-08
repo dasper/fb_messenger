@@ -12,6 +12,10 @@ use GigaAI\Core\Config;
 class Request
 {
     public $received;
+    
+    private $config = [];
+
+    private $base_url = 'https://graph.facebook.com/v2.6/';
 
     public function __construct()
     {
@@ -46,14 +50,14 @@ class Request
 
     private function sendSubscribe()
     {
-        $end_point = "https://graph.facebook.com/v2.6/me/subscribed_apps?access_token=" . Config::get('page_access_token');
+        $end_point = $base_url . "me/subscribed_apps?access_token=" . $this->config['page_access_token'];
 
         return $this->send($end_point);
     }
 
     public function getUserProfile($user_id)
     {
-        $end_point  = "https://graph.facebook.com/v2.6/{$user_id}?access_token=" . Config::get('page_access_token');
+        $end_point  = $base_url . "{$user_id}?access_token=" . $this->config['page_access_token'];
 
         $data       = file_get_contents($end_point);
 
@@ -90,9 +94,9 @@ class Request
 
     public function updateGetStartedButton()
     {
-        $payload = Config::get('get_started_button_payload');
+        $payload = $this->config['get_started_button_payload'];
 
-        $end_point = 'https://graph.facebook.com/v2.6/me/thread_settings?access_token=' . Config::get('page_access_token');
+        $end_point = $base_url . 'me/thread_settings?access_token=' . $this->config['page_access_token'];
 
         $params = array(
             'setting_type' => 'call_to_actions',
@@ -117,9 +121,9 @@ class Request
 
     public function updateGreetingText()
     {
-        $greeting_text = Config::get('greeting_text');
+        $greeting_text = $this->config['greeting_text'];
 
-        $end_point = 'https://graph.facebook.com/v2.6/me/thread_settings?access_token=' . Config::get('page_access_token');
+        $end_point = $base_url . 'me/thread_settings?access_token=' . $this->config['page_access_token'];
 
         $params = array(
             'setting_type' => 'greeting',
@@ -137,7 +141,7 @@ class Request
     {
         $menu = Config::get('persistent_menu');
 
-        $end_point = 'https://graph.facebook.com/v2.6/me/thread_settings?access_token=' . Config::get('page_access_token');
+        $end_point = 'me/thread_settings?access_token=' . Config::get('page_access_token');
 
         $params = array(
             'setting_type' => 'call_to_actions',

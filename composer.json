@@ -19,6 +19,9 @@
     "psr-4": {
       "GigaAI\\": "src/"
     },
+  "suggest": {
+    "illuminate/database": "Database connections require the use of Eloquent"
+    },
     "files": [
       "src/helpers/helpers.php"
     ]

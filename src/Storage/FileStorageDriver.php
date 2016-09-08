@@ -24,9 +24,9 @@ class FileStorageDriver implements StorageInterface
 	 */
 	private $file;
 
-	public function __construct()
+	public function __construct($cache_path)
 	{
-		$this->file = Config::get('cache_path') . 'data.json';
+		$this->file = $cache_path . 'data.json';
 	}
 
 	/**

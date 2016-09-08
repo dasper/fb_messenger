@@ -36,7 +36,7 @@ class MessengerBot
         if ( ! empty($config))
             $this->config->set($config);
 
-        $this->request = new Request;
+        $this->request = new Request($config->toArray());
 
         $this->storage = new Storage;
 

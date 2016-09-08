@@ -14,6 +14,13 @@ class Model
     );
 
     public $current_node = array();
+    
+    private $storage_driver;
+
+    private function __construct($storage_driver = 'file')
+    {
+        $this->storage_driver = $storage_driver;
+    }
 
     public function parseAnswers($asks, $answers = null)
     {
@@ -101,9 +108,7 @@ class Model
     {
         $this->current_node = compact('node_type', 'asks');
 
-        $storage_driver = Config::get('storage_driver', 'file');
-
-        if ($storage_driver === 'file' || (isset($answer['type']) && $answer['type'] === 'callback')) {
+        if ($this->storage_driver === 'file' || (isset($answer['type']) && $answer['type'] === 'callback')) {
 
             if (isset($answer['type']) && $answer['type'] === 'callback') {
                 Storage::removeAnswers($node_type, $asks);
@@ -148,9 +153,7 @@ class Model
         // Check in storage driver
         $search_in_storage = array();
 
-        $storage_driver = Config::get('storage_driver', 'file');
-
-        if ($storage_driver != 'file')
+        if ($this->storage_driver != 'file')
             $search_in_storage = Storage::getAnswers($node_type, $ask);
 
         $answers = array_merge_recursive($search_in_storage, $this->answers);
