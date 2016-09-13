@@ -50,14 +50,14 @@ class Request
 
     private function sendSubscribe()
     {
-        $end_point = $base_url . "me/subscribed_apps?access_token=" . $this->config['page_access_token'];
+        $end_point = $this->base_url . "me/subscribed_apps?access_token=" . $this->config['page_access_token'];
 
         return $this->send($end_point);
     }
 
     public function getUserProfile($user_id)
     {
-        $end_point  = $base_url . "{$user_id}?access_token=" . $this->config['page_access_token'];
+        $end_point  = $this->base_url . "{$user_id}?access_token=" . $this->config['page_access_token'];
 
         $data       = file_get_contents($end_point);
 
@@ -96,7 +96,7 @@ class Request
     {
         $payload = $this->config['get_started_button_payload'];
 
-        $end_point = $base_url . 'me/thread_settings?access_token=' . $this->config['page_access_token'];
+        $end_point = $this->base_url . 'me/thread_settings?access_token=' . $this->config['page_access_token'];
 
         $params = array(
             'setting_type' => 'call_to_actions',
@@ -123,7 +123,7 @@ class Request
     {
         $greeting_text = $this->config['greeting_text'];
 
-        $end_point = $base_url . 'me/thread_settings?access_token=' . $this->config['page_access_token'];
+        $end_point = $this->base_url . 'me/thread_settings?access_token=' . $this->config['page_access_token'];
 
         $params = array(
             'setting_type' => 'greeting',

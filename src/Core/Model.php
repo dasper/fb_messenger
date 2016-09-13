@@ -17,7 +17,7 @@ class Model
     
     private $storage_driver;
 
-    private function __construct($storage_driver = 'file')
+    public function __construct($storage_driver = 'file')
     {
         $this->storage_driver = $storage_driver;
     }
